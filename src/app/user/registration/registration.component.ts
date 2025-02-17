@@ -4,26 +4,32 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validator
 import { FirstkeyPipe } from '../../shared/pipes/firstkey.pipe';
 import { AuthService } from '../../shared/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { Route, Router, RouterLink } from '@angular/router';
-
+import { Router, RouterLink } from '@angular/router';
+import { roles } from '../../shared/properties/roles';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-registration',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule,FirstkeyPipe,RouterLink],
+  imports: [ReactiveFormsModule,CommonModule,FirstkeyPipe,RouterLink,NgxSpinnerModule],
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.css'
 })
 export class RegistrationComponent implements OnInit {
-  
   form: FormGroup;
   isSubmitted : boolean = false;
+  role = roles;
+  roleKeys = Object.keys(this.role)
   constructor(public formBuilder: FormBuilder,
     private service: AuthService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private spinner : NgxSpinnerService
   ) {
     this.form = this.formBuilder.group({
-      fullName: ['', Validators.required],
+      fullName: ['', [Validators.required, Validators.min(3)]],
+      age : ['',Validators.required],
+      gender : ['',Validators.required],
+      role :['',Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [
         Validators.required,
@@ -56,6 +62,7 @@ export class RegistrationComponent implements OnInit {
     this.isSubmitted = true;
 
     if(this.form.valid){
+      this.spinner.show();
       this.service.createUser(this.form.value)
       .subscribe({
         next:(res:any )=>{
@@ -63,10 +70,13 @@ export class RegistrationComponent implements OnInit {
             this.form.reset();
             this.isSubmitted = false;
             this.toastr.success('New user created!', 'Registration Sucessful')
+            this.router.navigateByUrl('/login');
+            this.spinner.hide();
           }
         },
         error:err=>{
           console.log(err);
+          this.spinner.hide();
           if(err.error.errors){
              err.error.errors.forEach((x:any) => {
             switch(x.code){

@@ -1,0 +1,98 @@
+<div class="contrainer-fluid">
+    <div class="row">
+        <div class="col-8">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-control shadow-lg p-3">
+                    <p class="font-light text-primary fs-4 text-center">Leave Application</p>                <div class="container">
+                    <div class="row g-2">
+                        <div class="col-4">
+                            <label for="fromdate" class="form-label">From Date</label>
+                            <!-- <input type="text" formControlName="fromDate" class="form-control" name="" id="fromdate"
+                                placeholder="From date" aria-label="From Date" /> -->
+                                <p-datepicker formControlName="fromDate"/>
+                            <div class="error-feedback"
+                                *ngIf="hasDisplayableError('fromDate') && form.controls.fromDate.hasError('required')">
+                                From date is required.
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label for="todate" class="form-label">To Date</label>
+                            <p-datePicker type="text" formControlName="toDate" id="todate" />
+                            <div class="error-feedback" *ngIf="hasDisplayableError('toDate') && form.controls.toDate.hasError('required')">
+                                To date is required.
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <label for="inputState" class="form-label">Leave Type</label>
+                            <select id="inputState" formControlName="leaveType" class="form-select">
+                                <option selected>CL</option>
+                                <option selected>PL</option>
+                                <option selected></option>
+                                <option>...</option>
+                            </select>
+                            <!-- <p-autocomplete [(ngModel)]="value" [dropdown]="true" [suggestions]="items" (completeMethod)="search($event)" /> -->
+                            
+                            <div class="error-feedback" *ngIf="hasDisplayableError('leaveType') && form.controls.leaveType.hasError('required')">
+                                Please select leave type.
+                            </div>
+                        </div>
+                        <div class="row g-2">
+                            <div class="col-12">
+                                <label for="reason" class="form-label">Reason</label>
+                                <textarea type="text" formControlName="reason" class="form-control" name="" id="reason"
+                                    placeholder="Reason"></textarea>
+                            </div>
+                            <div class="error-feedback" *ngIf="hasDisplayableError('reason') && form.controls.reason.hasError('required')">
+                                Reason is required.
+                            </div>
+                            <div class="col"></div>
+                            <div class="col-12">
+                                <button type="submit" name="" id="Cancelbtn" class="btn btn-danger ml-3" role="button">Cancel</button>   
+                                <button type="submit" name="" id="savebtn" class="btn btn-primary"  role="button">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col">
+            <form class="form-control bg-yellow-50 shadow-lg p-3">
+                <p class="font-light text-primary fs-4 text-center">Leave info </p>
+
+                 <table class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">PL</th>
+                    <th scope="col">CL</th>
+                    <th scope="col">Balance</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row"></th>
+                    <td>35</td>
+                    <td>12</td>
+                    <td>10</td>
+                  </tr>
+                  <!-- <tr>
+                    <th scope="row">2</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>fat</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Larry</td>
+                    <td>the Bird</td>
+                    <td>twitter</td>
+                  </tr> -->
+                </tbody>
+              </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="card flex justify-center">
+    <p-button label="Check"></p-button>
+</div>

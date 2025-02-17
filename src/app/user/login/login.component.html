@@ -17,7 +17,7 @@
         Please enter your Email address.
     </div>
     <div class="mb-3">
-        <input class="form-control bg-body secondary"
+        <input type="password" class="form-control bg-body secondary"
         placeholder="Password" formControlName="password">
     </div>
     <div class="error-feedback" *ngIf="hasDisplayableError('password') && form.controls.password.hasError('required')">
@@ -29,3 +29,4 @@
         </button>
       </div>
 </form>
+<ngx-spinner bdColor="rgba(51,51,51,0.8)" size="large" color="#fff" type="line-spin-fade"  [fullScreen] = "true"><p>Loading</p></ngx-spinner>

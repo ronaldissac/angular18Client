@@ -14,4 +14,8 @@ export class UserService {
   getUserProfile(){
    return this.http.get(environment.apiBaseUrl +'/UserProfile')
   }
+
+  submitLeaveReq(){
+    return this.http.get(environment.apiBaseUrl+ '/LeaveRequest')
+  }
 }

@@ -11,9 +11,9 @@ export class AuthService {
   constructor(private http : HttpClient) {}
 
     createUser(formdata : any){
-      formdata.role = "Teacher"
-      formdata.gender = "Female"
-      formdata.age = 35
+      // formdata.role = "Teacher"
+      // formdata.gender = "Female"
+      // formdata.age = 35
      return this.http.post(environment.apiBaseUrl+'/api/SignUp',formdata);
     }
 
@@ -35,5 +35,11 @@ export class AuthService {
 
     deleteToken(){
       return localStorage.removeItem(TOKEN_KEY);
+    }
+
+    getClaims(){
+      const claim = JSON.parse(window.atob(this.getToken()!.split('.')[1]));
+
+       return claim;
     }
 } 

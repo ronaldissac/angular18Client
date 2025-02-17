@@ -1,21 +1,53 @@
-<nav id="sidebar" class="navbar bg-body-tertiary vh-100 flex-column justify-content-start">
-    
-</nav>
 <div id="main">
-    <nav class="navbar navbar-light bg-light justify-content-between px-5 py-1">
-        <!-- <div class="container-fluid px-5 py-5"> -->        
-            <a class="navbar-brand">Navbar</a>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-            <button class="btn btn-dark" (click)="onLogout()">Logout</button>
-        <!-- </div> -->
-
-
+    <nav class="navbar bg-dark justify-content-between px-2 py-2 mb-0 shadow-md">
+        <div class="justify-content-center p-1">
+            <a class="navbar-brand h1 fw-bold text-white" tabindex="-1" routerLink="/dashboard">{{AppName}}</a>
+        </div>
+        <div class="btn-group dropstart">
+            <span class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img style="height: 30px; border-radius: 10px;" src="https://i.imgur.com/hczKIze.jpg" alt="">
+            </span>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" routerLink="/forbidden">{{usermenu.profile}}</a></li>
+                <li><a class="dropdown-item" href="#">{{usermenu.ChangePass}}</a></li>
+                <li><a class="dropdown-item" href="#" (click)="onLogout()">{{usermenu.logout}}</a></li>
+            </ul>
+        </div>
     </nav>
+</div>
 
-    <div class="mt-5 p-5">
-        <router-outlet></router-outlet>
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center g-2">
+        <!-- Sidebar -->
+        <div class="col-end-4">
+            <nav id="sidebar" class="navbar text-white vh-100 flex-column justify-content-start shadow-lg rounded-1 p-2 d-flex overflow-auto">
+                <ul class="nav flex-column w-100 px-1">
+                    <li class="nav-item">
+                        <a class="nav-link" [routerLink]="ROUTERS.DASHBOARD"><i class="fas fa-tachometer-alt"></i><span>&nbsp;&nbsp;Dashboard</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [appHideIfClaimsNotMet]="claimReq.manageronly"
+                            routerLink="/manager">
+                            {{roles.manager}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [appHideIfClaimsNotMet]="claimReq.adminormanger"
+                            routerLink="/leaveapproval">{{roles.admin}}/{{roles.manager}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [appHideIfClaimsNotMet]="claimReq.employeeonly"
+                            routerLink="/employee"><i class="fa-solid fa-user"></i>&nbsp;&nbsp;{{roles.employee}}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" [appHideIfClaimsNotMet]="claimReq.employeeonly"
+                            routerLink="employee/applyleave">  <i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;{{navMenu.applyLeave}}</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Main Content -->
+        <div class="col-8 offset-md-2">
+            <router-outlet></router-outlet>
+        </div>
     </div>
 </div>
